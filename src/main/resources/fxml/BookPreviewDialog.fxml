@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.net.URL?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane fx:id="dialogRoot"
+           prefWidth="720" prefHeight="440"
+           xmlns="http://javafx.com/javafx/15"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.readile.readile.controllers.book.BookPreviewDialogController"
+           styleClass="dialog-overlay">
+
+    <stylesheets>
+        <URL value="@../styles/global.css" />
+    </stylesheets>
+
+    <AnchorPane fx:id="contentRoot"
+                maxWidth="700" maxHeight="420"
+                styleClass="dialog-surface">
+
+        <JFXButton text="✕"
+                   layoutX="660" layoutY="10"
+                   onAction="#close"
+                   style="-fx-background-color: transparent; -fx-text-fill: dark-orange-1; -fx-font-size: 16; -fx-font-weight: 800;">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </JFXButton>
+
+        <Pane fx:id="coverPane"
+              layoutX="20" layoutY="55"
+              prefWidth="260" prefHeight="340"
+              style="-fx-background-radius: 12; -fx-background-color: gray-3;" />
+
+        <Label fx:id="title"
+               layoutX="310" layoutY="60"
+               prefWidth="360" prefHeight="40"
+               style="-fx-text-fill: text-fill-2; -fx-font-size: 26; -fx-font-weight: 800;" />
+
+        <Label fx:id="author"
+               layoutX="310" layoutY="110"
+               prefWidth="360" prefHeight="30"
+               style="-fx-text-fill: main-color; -fx-font-size: 18; -fx-font-weight: 700;" />
+
+        <Label fx:id="pages"
+               layoutX="310" layoutY="155"
+               prefWidth="360" prefHeight="30"
+               style="-fx-text-fill: subtext-color; -fx-font-size: 16;" />
+
+        <Label fx:id="description"
+               layoutX="310" layoutY="200"
+               prefWidth="360" prefHeight="140"
+               wrapText="true"
+               alignment="TOP_LEFT"
+               style="-fx-text-fill: text-fill-2; -fx-font-size: 14;" />
+
+        <JFXButton text="Add book"
+                   layoutX="310" layoutY="360"
+                   prefWidth="160" prefHeight="40"
+                   onAction="#addBook"
+                   style="-fx-background-color: main-color; -fx-text-fill: text-fill-1; -fx-font-size: 15; -fx-background-radius: 18; -fx-font-weight: 700;">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </JFXButton>
+
+    </AnchorPane>
+</StackPane>

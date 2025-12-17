@@ -1,0 +1,52 @@
+#base {
+    -fx-background-color: surface-color;
+    -fx-border-color: rgba(101, 82, 71, 0.25);
+    -fx-border-radius: 16pt;
+    -fx-background-radius: 16pt;
+    -fx-effect: dropshadow(three-pass-box, shadow-color, 14, 0.08, 0, 6);
+}
+
+.root.dark-theme #base {
+    -fx-background-color: surface-color;
+    -fx-border-color: rgba(241, 233, 201, 0.15);
+}
+
+#book-img {
+    -fx-border-radius: 16pt 16pt 0 0;
+    -fx-background-radius: 16pt 16pt 0 0;
+    -fx-background-color: gray-1;
+    -fx-background-size: 215 210;
+    -fx-background-position: top center;
+    -fx-background-repeat: no-repeat;
+}
+
+#status {
+    -fx-background-color: light-orange-1;
+    -fx-padding: 6;
+    -fx-text-fill: dark-orange-1;
+    -fx-font-family: "Nunito Bold";
+    -fx-border-radius: 20pt;
+    -fx-background-radius: 20pt;
+    -fx-border-width: 1;
+    -fx-border-color: dark-orange-1;
+    -fx-font-size: 8pt;
+}
+
+#book-card-name {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Nunito SemiBold";
+    -fx-text-fill: text-fill-2;
+}
+
+.root.dark-theme #book-card-name {
+    -fx-text-fill: gray-1;
+}
+
+
+.jfx-spinner:determinate .arc {
+    -fx-stroke: main-color;
+}
+
+.jfx-spinner:determinate .percentage {
+    -fx-fill: main-color;
+}

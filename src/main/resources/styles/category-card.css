@@ -1,0 +1,47 @@
+#base {
+    -fx-background-color: surface-color;
+    -fx-border-radius: 16pt;
+    -fx-background-radius: 16pt;
+    -fx-border-color: rgba(101, 82, 71, 0.22);
+    -fx-effect: dropshadow(three-pass-box, shadow-color, 14, 0.08, 0, 6);
+}
+
+.root.dark-theme #base {
+    -fx-background-color: surface-color;
+    -fx-border-color: rgba(241, 233, 201, 0.16);
+}
+
+#category-img {
+    -fx-border-radius: 15pt 15pt 0 0;
+    -fx-background-radius: 15pt 15pt 0 0;
+    -fx-background-color: gray-1;
+    -fx-background-size: 325;
+    -fx-background-position: top center;
+    -fx-background-repeat: no-repeat;
+}
+
+#category-name {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Nunito ExtraBold";
+    -fx-text-fill: text-fill-2;
+}
+
+.root.dark-theme #category-name {
+    -fx-text-fill: gray-1;
+}
+
+#books-number {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Nunito SemiBold";
+    -fx-text-fill: subtext-color;
+}
+
+.root.dark-theme #books-number {
+    -fx-text-fill: gray-1;
+}
+
+#count {
+    -fx-font-size: 12pt;
+    -fx-text-fill: main-color;
+    -fx-font-family: "Nunito SemiBold";
+}

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="root" prefHeight="706.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.readile.readile.controllers.authentication.SignInScreenController">
+   <stylesheets>
+      <URL value="@../styles/global.css" />
+      <URL value="@../styles/sign-in.css" />
+   </stylesheets>
+   <BorderPane layoutY="26.0" prefHeight="680.0" prefWidth="1024.0">
+      <left>
+         <Pane id="aside" prefHeight="700.0" prefWidth="380.0" BorderPane.alignment="CENTER">
+            <VBox layoutX="81.0" layoutY="88.0" prefHeight="260.0" prefWidth="218.0">
+               <Pane id="logo" prefHeight="200.0" prefWidth="200.0" />
+               <Label id="title" prefHeight="63.0" prefWidth="218.0" text="Readile" />
+            </VBox>
+            <Label id="subtitle" layoutY="603.0" prefHeight="21.0" prefWidth="380.0" text="The Way to Track Your Readings" />
+         </Pane>
+      </left>
+      <center>
+         <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <VBox id="main" layoutX="97.0" layoutY="30.0" prefHeight="615.0" prefWidth="450.0">
+               <Label id="sign-in-lbl" prefHeight="66.0" prefWidth="450.0" text="Sign In" />
+               <JFXTextField id="email-field" fx:id="email" promptText="Email" />
+               <JFXPasswordField id="password-field" fx:id="password" promptText="Password" />
+               <HBox id="sign-in-container" prefHeight="57.0" prefWidth="450.0">
+                  <Hyperlink id="forgot-password-link" onAction="#forgotPassword" prefHeight="55.0" prefWidth="258.0" text="Forgot Password ?" />
+                  <JFXButton id="sign-in-btn" onAction="#signIn" prefHeight="55.0" prefWidth="193.0" text="Sign In">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></JFXButton>
+               </HBox>
+               <HBox alignment="CENTER" prefHeight="5.0" prefWidth="450.0">
+                  <Separator prefHeight="16.0" prefWidth="207.0" />
+                  <Label id="or-lbl" alignment="CENTER" prefHeight="21.0" prefWidth="58.0" text="OR" />
+                  <Separator layoutX="92.0" layoutY="10.0" prefHeight="16.0" prefWidth="214.0" />
+               </HBox>
+               <JFXButton id="google-sign-in-btn" alignment="TOP_LEFT" onAction="#signInWithGoogle" prefHeight="49.0" prefWidth="450.0" text="  Sign in with Google">
+                  <graphic>
+                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../icons/google.png" />
+                     </ImageView>
+                  </graphic>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </JFXButton>
+               <HBox alignment="CENTER" prefHeight="25.0" prefWidth="450.0">
+                  <Label id="no-account-label" prefHeight="20.0" prefWidth="208.0" text="Don't Have an Account ?  " />
+                  <Hyperlink id="sign-up-link" onAction="#signUp" text="Sign Up Now" />
+               </HBox>
+            </VBox>
+            <Label id="error" fx:id="error" layoutX="106.0" layoutY="317.0" prefHeight="20.0" prefWidth="441.0" text="You have entered an invalid username or password" visible="false" />
+         </Pane>
+      </center>
+   </BorderPane>
+   <HBox id="tool-bar" fx:id="toolBar" alignment="CENTER_RIGHT" onMouseEntered="#move" prefHeight="26.0"
+         prefWidth="1024.0">
+      <JFXButton id="min" onAction="#minimize" ripplerFill="WHITE" text=" ">
+         <cursor>
+            <Cursor fx:constant="HAND"/>
+         </cursor>
+      </JFXButton>
+      <JFXButton id="close" onAction="#close" ripplerFill="WHITE" text=" ">
+         <cursor>
+            <Cursor fx:constant="HAND"/>
+         </cursor>
+      </JFXButton>
+   </HBox>
+</AnchorPane>

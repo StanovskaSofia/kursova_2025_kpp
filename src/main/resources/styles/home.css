@@ -1,0 +1,225 @@
+#navbar {
+    -fx-background-color: main-color;
+    -fx-border-radius: 0pt 0pt 18pt 18pt;
+    -fx-background-radius: 0pt 0pt 18pt 18pt;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.08), 10, 0, 0, 4);
+}
+
+#logo {
+    -fx-background-image: url("../images/white-logo.png");
+    -fx-background-color: none;
+    -fx-background-position: center center;
+    -fx-background-size: 80;
+}
+
+.root.dark-theme #logo {
+    -fx-background-image: url("../images/black-logo.png");
+}
+
+#title {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Nunito SemiBold";
+    -fx-alignment: center;
+    -fx-text-fill: text-fill-1;
+}
+
+#avatar {
+    -fx-border-radius: 15pt 15pt 0 0;
+    -fx-background-radius: 15pt 15pt 0 0;
+    -fx-background-image: url("../icons/avatar.png");
+    -fx-background-color: none;
+    -fx-background-position: center center;
+    -fx-background-size: 70;
+    -fx-background-repeat: no-repeat;
+}
+
+.root.dark-theme #avatar {
+    -fx-background-image: url("../icons/avatar__dark-theme.png");
+}
+
+#back {
+    -fx-background-image: url("../icons/back.png");
+}
+
+.root.dark-theme #back {
+    -fx-background-image: url("../icons/back__dark-theme.png");
+}
+
+#search-field {
+    -fx-font-size: 12pt;
+    -jfx-unfocus-color: gray-2;
+    -jfx-focus-color: light-orange-1;
+    -fx-prompt-text-fill: subtext-color;
+    -fx-text-fill: text-fill-2;
+    -jfx-label-float: true;
+    -fx-background-color: light-orange-3;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-padding: 8 12 8 12;
+    -fx-effect: dropshadow(three-pass-box, rgba(101, 82, 71, 0.1), 8, 0, 0, 2);
+}
+
+#filter {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Nunito Bold";
+    -fx-text-fill: main-color;
+}
+
+#filter-icon {
+    -fx-background-image: url("../icons/filter.png");
+    -fx-background-repeat: no-repeat;
+}
+
+.root.dark-theme #filter-icon {
+    -fx-background-image: url("../icons/filter__dark-theme.png");
+}
+
+#filter-rating, #filter-status {
+    -fx-font-family: "Nunito SemiBold";
+    -fx-font-size: 10pt;
+    -jfx-unfocus-color: main-color;
+    -jfx-focus-color: light-orange-1;
+    -fx-prompt-text-fill: subtext-color;
+    -fx-text-fill: main-color;
+    -jfx-label-float: true;
+    -fx-background-color: light-orange-2;
+    -fx-border-radius: 16px;
+    -fx-background-radius: 16px;
+    -fx-padding: 0 0 0 10;
+}
+
+.jfx-combo-box .list-cell:hover {
+    -fx-background-color: main-color;
+    -fx-text-fill: text-fill-1;
+}
+
+.jfx-combo-box .list-cell {
+    -fx-text-fill: main-color;
+}
+
+#add-book-btn {
+    -fx-background-color: main-color;
+    -fx-text-fill: text-fill-1;
+    -fx-font-weight: 700;
+    -fx-font-size: 12pt;
+    -fx-border-radius: 16pt;
+    -fx-background-radius: 16pt;
+    -fx-effect: dropshadow(three-pass-box, shadow-color, 14, 0.08, 0, 5);
+}
+
+#add-book-btn:hover {
+    -fx-background-color: secondary-color;
+}
+
+#browse-categories-btn {
+    -fx-background-color: secondary-color;
+    -fx-text-fill: text-fill-1;
+    -fx-font-weight: 700;
+    -fx-font-size: 12pt;
+    -fx-border-radius: 16pt;
+    -fx-background-radius: 16pt;
+    -fx-effect: dropshadow(three-pass-box, shadow-color, 14, 0.08, 0, 5);
+
+    -fx-alignment: center;
+    -fx-padding: 0;   /* важливо */
+}
+
+#browse-categories-btn:hover,
+#browse-categories-btn:focused {
+    -fx-background-color: derive(secondary-color, -6%);
+    -fx-text-fill: text-fill-1;
+}
+
+#browse-categories-btn:pressed {
+    -fx-background-color: derive(secondary-color, -10%);
+    -fx-text-fill: text-fill-1;
+}
+
+.root.dark-theme #browse-categories-btn,
+.root.dark-theme #browse-categories-btn:hover,
+.root.dark-theme #browse-categories-btn:focused,
+.root.dark-theme #browse-categories-btn:pressed {
+    -fx-background-color: secondary-color;
+    -fx-text-fill: text-fill-1;
+}
+
+
+#browse-image {
+    -fx-background-image: url("../icons/category.png");
+    -fx-background-color: none;
+    -fx-background-position: center center;
+    -fx-background-size: 26;
+}
+
+#browse-categories-btn:hover {
+    -fx-background-color: main-color;
+}
+
+
+.root.dark-theme #browse-image {
+    -fx-background-image: url("../icons/category__dark-theme.png");
+}
+
+.separator .line {
+    -fx-background-color: gray-2;
+    -fx-pref-height: 2;
+    -fx-border-color: null ;
+}
+
+.root.dark-theme #browse-categories-btn {
+    -fx-text-fill: main-color;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#cards-view {
+    -fx-background-color: background-color;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: background-color;
+    -fx-border-color: background-color;
+    -fx-background-radius: 0.0em;
+    -fx-border-radius: 2.0em;
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.0em;
+    -fx-padding: 0.0 10.0 0.0 0.0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0.15em 0.0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0.0 0.15em;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: gray-2;
+    -fx-background-insets: 4.0, 0.0, 0.0;
+    -fx-background-radius: 4.0em;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: gray-1;
+    -fx-background-insets: 4.0, 0.0, 0.0;
+    -fx-background-radius: 4.0em;
+}
+
+#main {
+    -fx-background-color: background-color;
+    -fx-background-radius: 16px;
+    -fx-border-radius: 16px;
+    -fx-padding: 14px;
+}

@@ -1,0 +1,158 @@
+#navbar {
+    -fx-background-color: main-color;
+    -fx-border-radius: 0pt 0pt 18pt 18pt;
+    -fx-background-radius: 0pt 0pt 18pt 18pt;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.08), 10, 0, 0, 4);
+    -fx-alignment: center;
+}
+
+#title {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Nunito SemiBold";
+    -fx-alignment: center;
+    -fx-text-fill: text-fill-1;
+}
+
+#avatar {
+    -fx-background-color: transparent;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+#back {
+    -fx-background-image: url("../icons/back.png");
+}
+
+.root.dark-theme #back {
+    -fx-background-image: url("../icons/back__dark-theme.png");
+}
+
+#logo {
+    -fx-background-image: url("../images/white-logo.png");
+    -fx-background-color: none;
+    -fx-background-position: center center;
+    -fx-background-size: 80;
+}
+
+.root.dark-theme #logo {
+    -fx-background-image: url("../images/black-logo.png");
+}
+
+#profile-image {
+    -fx-border-radius: 90pt 90pt;
+    -fx-background-radius: 90pt 90pt;
+    -fx-background-image: url("../images/profile-image.png");
+    -fx-background-color: none;
+    -fx-background-position: center center;
+    -fx-background-size: 180;
+    -fx-background-repeat: no-repeat;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.08), 8, 0, 0, 2);
+}
+
+#change-avatar-btn, #delete-account-btn {
+    -fx-text-fill: text-fill-1;
+    -fx-font-family: "Nunito Bold";
+    -fx-font-size: 12pt;
+    -fx-border-radius: 14pt;
+    -fx-background-radius: 14pt;
+    -fx-effect: dropshadow(three-pass-box, shadow-color, 14, 0.08, 0, 5);
+    -fx-padding: 10pt 16pt 10pt 16pt;
+}
+
+#change-avatar-btn {
+    -fx-background-color: secondary-color;
+}
+
+.root.dark-theme #change-avatar-btn {
+    -fx-text-fill: main-color;
+}
+
+#delete-account-btn {
+    -fx-background-color: error;
+}
+
+#username-container, #email-container, #password-container {
+    -fx-background-color: surface-color;
+    -fx-border-color: rgba(101, 82, 71, 0.16);
+    -fx-border-radius: 10pt;
+    -fx-background-radius: 10pt;
+    -fx-padding: 6 10;
+}
+
+.root.dark-theme #username-container,
+.root.dark-theme #email-container,
+.root.dark-theme #password-container {
+    -fx-border-color: rgba(241, 233, 201, 0.12);
+}
+
+#username-lbl, #email-lbl, #password-lbl {
+    -fx-font-family: "Nunito Bold";
+    -fx-font-size: 12pt;
+    -fx-text-fill: text-fill-2;
+    -fx-background-color: transparent;
+}
+
+#username, #email {
+    -fx-font-size: 12pt;
+    -fx-text-fill: text-fill-2;
+    -jfx-unfocus-color: subtext-color;
+    -jfx-focus-color: main-color;
+    -fx-prompt-text-fill: subtext-color;
+}
+
+#edit-btn, #change-password-btn {
+    -fx-effect: dropshadow(three-pass-box, shadow-color, 14, 0.08, 0, 5);
+    -fx-font-family: "Nunito Bold";
+    -fx-text-fill: text-fill-1;
+    -fx-font-size: 12pt;
+    -fx-border-radius: 14pt;
+    -fx-background-radius: 14pt;
+    -fx-padding: 10pt 16pt 10pt 16pt;
+}
+
+#edit-btn {
+    -fx-background-color: main-color;
+}
+
+#edit-btn:hover {
+    -fx-background-color: secondary-color;
+}
+
+#change-password-btn {
+    -fx-background-color: secondary-color;
+}
+
+#change-password-btn:hover {
+    -fx-background-color: main-color;
+}
+
+
+.root.dark-theme #change-password-btn {
+    -fx-text-fill: text-fill-1;
+}
+
+/* Password dialog styling */
+#password-dialog {
+    -fx-background-color: surface-color;
+    -fx-background-radius: 18;
+    -fx-effect: dropshadow(three-pass-box, shadow-color, 16, 0.08, 0, 5);
+}
+
+#old-password-field, #new-password-field {
+    -fx-font-family: 'Nunito SemiBold', sans-serif;
+    -jfx-unfocus-color: subtext-color;
+    -jfx-focus-color: main-color;
+    -fx-prompt-text-fill: subtext-color;
+    -fx-text-fill: text-fill-2;
+    -jfx-label-float: true;
+    -fx-font-size: 10pt;
+    -fx-background-color: light-orange-3;
+    -fx-background-radius: 14pt;
+    -fx-border-radius: 14pt;
+}
+
+#error {
+    -fx-font-size: 8pt;
+    -fx-text-fill: error;
+}

@@ -1,0 +1,125 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap");
+
+.root {
+    -fx-background-color: background-color;
+    -fx-font-family: 'Nunito', 'Montserrat', sans-serif;
+
+    /* Color Palette */
+    background-color: #F1E9C9;
+    surface-color: #D7DFAF;
+    main-color: #655247;
+    secondary-color: #A27F64;
+    accent-color: #ADC177;
+
+    light-orange-1: #ADC177; /* Accent */
+    light-orange-2: #D7DFAF; /* Surface */
+    light-orange-3 : #E6DEBE; /* Input background */
+
+    dark-orange-1: #4A3F37;
+
+    gray-1: #E5DECE;
+    gray-2: #C8BAA6;
+    gray-3: #B29F8C;
+
+    text-fill-1: #F7F3E7;
+    text-fill-2: #3F352F;
+    subtext-color: #6C5F57;
+
+    overlay-color: rgba(35, 28, 24, 0.55);
+    shadow-color: rgba(0, 0, 0, 0.18);
+
+    error: #C05C5C;
+    light-navy: #B9AF9E;
+}
+
+.root.dark-theme {
+    -fx-background-color: background-color;
+
+    /* Dark Theme Color Palette */
+
+    background-color: #2B2420;
+    surface-color: #3B312B;
+
+    main-color: #A27F64;
+    secondary-color: #655247;
+    accent-color: #ADC177;
+
+    gray-1: #BFAFA1;
+    gray-2: #8C7A70;
+    gray-3: #4D4038;
+
+    light-orange-1: #C0A074;
+    light-orange-3 : #A27F64;
+
+    text-fill-1: #F1E9C9;
+    text-fill-2: #E6DCCB;
+    subtext-color: #B9A999;
+
+    error: #E66A6C;
+    light-navy: #837468;
+}
+
+.hyperlink:default {
+    -fx-underline: line;
+}
+
+#tool-bar {
+    -fx-background-color: linear-gradient(surface-color, gray-1);
+}
+
+#close, #min {
+    -fx-pref-height: 26pt;
+    -fx-pref-width: 30pt;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+#close {
+    -fx-background-image: url("../icons/close.png");
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 8pt;
+}
+
+#min {
+    -fx-background-image: url("../icons/minimize.png");
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 8pt;
+}
+
+
+#close:hover {
+    -fx-background-color: error;
+    -fx-background-image: url("../icons/close-hover.png");
+}
+
+#min:hover {
+    -fx-background-color: light-navy;
+}
+
+.dialog-overlay {
+    -fx-background-color: overlay-color;
+    -fx-background-insets: 0;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.35), 30, 0.1, 0, 0);
+}
+
+.dialog-surface {
+    -fx-background-color: surface-color;
+    -fx-background-radius: 18;
+    -fx-effect: dropshadow(three-pass-box, shadow-color, 18, 0.08, 0, 6);
+    -fx-padding: 16;
+}
+
+/* дефолт (світла тема) */
+#description {
+    -fx-text-fill: #3a2f2a;   /* темний текст */
+    -fx-opacity: 0.85;
+}
+
+/* темна тема */
+.root.dark-theme #description {
+    -fx-text-fill: #E9E3D7;   /* світлий текст */
+    -fx-opacity: 0.85;
+}
+

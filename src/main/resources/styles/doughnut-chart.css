@@ -1,0 +1,48 @@
+.default-color0.chart-pie {
+    -fx-pie-color: #ADC177;
+}
+
+.default-color1.chart-pie {
+    -fx-pie-color: #A27F64;
+}
+
+.default-color2.chart-pie {
+    -fx-pie-color: #655247;
+}
+
+.chart-pie-label {
+    -fx-font-size: 16px;              /* було 13px */
+    -fx-font-family: "Nunito SemiBold";
+    -fx-fill: #3A342F;                /* light text */
+}
+
+/* Dark theme */
+.root.dark-theme .chart-pie-label {
+    -fx-fill: #EDE6D0;                /* dark text */
+}
+
+/* Лінії від секторів до тексту */
+.chart-pie-label-line {
+    -fx-stroke-width: 1.4;
+    -fx-stroke: rgba(58,52,47,0.55);  /* light line */
+}
+
+.root.dark-theme .chart-pie-label-line {
+    -fx-stroke: rgba(237,230,208,0.55); /* dark line */
+}
+
+
+.chart{
+    -fx-label-line-length: 10;
+    -fx-pie-stroke: transparent;
+    -fx-padding: 8;
+}
+
+.chart {
+    -fx-pref-width: 350;
+    -fx-pref-height: 260;
+    -fx-min-width: 350;
+    -fx-min-height: 260;
+    -fx-max-width: 350;
+    -fx-max-height: 260;
+}

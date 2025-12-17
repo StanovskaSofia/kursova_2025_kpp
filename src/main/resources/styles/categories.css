@@ -1,0 +1,145 @@
+#navbar {
+    -fx-background-color: main-color;
+    -fx-border-radius: 0pt 0pt 20pt 20pt;
+    -fx-background-radius: 0pt 0pt 20pt 20pt;
+    -fx-alignment: center;
+}
+
+#logo {
+    -fx-background-image: url("../images/white-logo.png");
+    -fx-background-color: none;
+    -fx-background-position: center center;
+    -fx-background-size: 80;
+}
+
+.root.dark-theme #logo {
+    -fx-background-image: url("../images/black-logo.png");
+}
+
+#title {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Nunito SemiBold";
+    -fx-alignment: center;
+    -fx-text-fill: text-fill-1;
+}
+
+#avatar {
+    -fx-border-radius: 15pt 15pt 0 0;
+    -fx-background-radius: 15pt 15pt 0 0;
+    -fx-background-image: url("../icons/avatar.png");
+    -fx-background-color: none;
+    -fx-background-position: center center;
+    -fx-background-size: 70;
+    -fx-background-repeat: no-repeat;
+}
+
+.root.dark-theme #avatar {
+    -fx-background-image: url("../icons/avatar__dark-theme.png");
+}
+
+#back {
+    -fx-background-image: url("../icons/back.png");
+}
+
+.root.dark-theme #back {
+    -fx-background-image: url("../icons/back__dark-theme.png");
+}
+
+#add-category-btn {
+    -fx-background-color: secondary-color;
+    -fx-text-fill: text-fill-1;
+    -fx-font-family: 'Nunito Bold', sans-serif;
+    -fx-font-size: 14pt;
+    -fx-effect: dropshadow(three-pass-box, rgb(0, 0, 0, 0.25), 4, 0, 0, 2);
+    -fx-border-radius: 8pt;
+    -fx-background-radius: 8pt;
+}
+
+.root.dark-theme #add-category-btn {
+    -fx-text-fill: main-color;
+}
+
+#plus {
+    -fx-background-image: url("../icons/plus.png");
+    -fx-background-color: none;
+    -fx-background-position: center center;
+    -fx-background-size: 20;
+}
+
+.root.dark-theme #plus {
+    -fx-background-image: url("../icons/plus__dark-theme.png");
+}
+
+.scroll-pane {
+    -fx-background-color:transparent;
+}
+
+#cards-view {
+    -fx-background-color: background-color;
+}
+
+#new-category-container {
+    -fx-background-color: background-color;
+}
+
+.scroll-bar:vertical .track{
+    -fx-background-color: background-color;
+    -fx-border-color: background-color;
+    -fx-background-radius : 0.0em;
+    -fx-border-radius :2.0em;
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 10.0 0.0 0.0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape : " ";
+    -fx-padding :0.15em 0.0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-shape : " ";
+    -fx-padding :0.0 0.15em;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color : gray-2;
+    -fx-background-insets : 4.0, 0.0, 0.0;
+    -fx-background-radius : 4.0em;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color :gray-1;
+    -fx-background-insets : 4.0, 0.0, 0.0;
+    -fx-background-radius : 4.0em;
+}
+
+/* New category dialog styling*/
+#new-category-dialog {
+    -fx-background-color: background-color;
+}
+
+#category-name-field {
+    -fx-font-family: 'Nunito SemiBold', sans-serif;
+    -jfx-unfocus-color: subtext-color;
+    -jfx-focus-color: main-color;
+    -fx-prompt-text-fill: subtext-color;
+    -fx-text-fill: text-fill-2;
+    -jfx-label-float: true;
+}
+
+#add-category-btn {
+    -fx-effect: dropshadow(three-pass-box, shadow-color, 14, 0.08, 0, 5);
+    -fx-font-family: "Nunito Bold";
+    -fx-text-fill: text-fill-1;
+    -fx-font-size: 12pt;
+    -fx-border-radius: 8pt;
+    -fx-background-radius: 8pt;
+    -fx-background-color: secondary-color;
+}

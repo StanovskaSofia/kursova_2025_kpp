@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane id="root" fx:id="root" styleClass="dark-theme" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.readile.readile.controllers.HomeScreenController">
+   <children>
+      <JFXDialog fx:id="addBookDialog" maxHeight="706.0" maxWidth="1024.0" minHeight="706.0" minWidth="1024.0" prefHeight="706.0" prefWidth="1024.0">
+         <children>
+            <JFXDialogLayout maxHeight="530.0" maxWidth="730.0" minHeight="530.0" minWidth="730.0" prefHeight="530.0" prefWidth="730.0">
+               <children>
+                  <Pane id="main" maxHeight="530.0" maxWidth="730.0" minHeight="530.0" minWidth="730.0" prefHeight="530.0" prefWidth="730.0">
+                     <children>
+                        <JFXButton layoutX="550.0" layoutY="36.0" onAction="#modalSearchForBook" ripplerFill="WHITE" text=" ">
+                           <font>
+                              <Font size="1.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/search.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <JFXTextField id="search-field" fx:id="searchField" layoutX="154.0" layoutY="31.0" onAction="#modalSearchForBook" prefHeight="37.0" prefWidth="396.0" promptText="Search for a book" />
+                        <StackPane layoutX="24.0" layoutY="78.0" prefHeight="450.0" prefWidth="685.0">
+                           <children>
+                              <ImageView fx:id="noResultsFound" fitHeight="284.0" fitWidth="244.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/no-results-found.png" />
+                                 </image>
+                              </ImageView>
+                              <ScrollPane fx:id="searchResults" hbarPolicy="NEVER" hvalue="0.5" prefHeight="450.0" prefWidth="720.0">
+                                 <content>
+                                    <FlowPane id="cards-view" fx:id="searchResultsView" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="15.0" prefHeight="447.0" prefWidth="720.0" vgap="15.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </Pane>
+               </children>
+            </JFXDialogLayout>
+         </children>
+      </JFXDialog>
+      <AnchorPane prefHeight="706.0" prefWidth="1024.0">
+         <stylesheets>
+            <URL value="@../styles/global.css" />
+            <URL value="@../styles/home.css" />
+         </stylesheets>
+         <BorderPane layoutY="25.0" prefHeight="680.0" prefWidth="1024.0">
+            <center>
+               <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <Separator layoutX="82.0" layoutY="347.0" prefHeight="16.0" prefWidth="450.0" rotate="90.0" />
+                  <JFXButton layoutX="697.0" layoutY="26.0" onAction="#searchForBook" ripplerFill="WHITE" text=" ">
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                     <graphic>
+                        <ImageView accessibleRole="BUTTON" fitHeight="28.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/search.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXTextField id="search-field" fx:id="search" layoutX="301.0" layoutY="21.0" onAction="#searchForBook" prefHeight="37.0" prefWidth="396.0" promptText="Search for a book" />
+                  <Pane layoutY="120.0" prefHeight="450.0" prefWidth="309.0">
+                     <children>
+                        <StackPane fx:id="charts" layoutX="4.0" maxHeight="210.0" maxWidth="300.0" minHeight="210.0" minWidth="300.0" prefHeight="210.0" prefWidth="300.0">
+                           <children>
+                              <ImageView fx:id="chartEmptyImage" fitHeight="161.0" fitWidth="246.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/empty-chart.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <JFXButton id="add-book-btn" layoutX="47.0" layoutY="249.0" onAction="#addNewBook" prefHeight="47.0" prefWidth="215.0" text="Add new book">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                         <JFXButton id="browse-categories-btn"
+                                    layoutX="47.0" layoutY="326.0"
+                                    onAction="#browseCategories"
+                                    prefHeight="76.0"
+                                    prefWidth="215.0"
+                                    text="Categories"
+                                    wrapText="false"
+                                    alignment="CENTER">
+                             <cursor>
+                                 <Cursor fx:constant="HAND"/>
+                             </cursor>
+                         </JFXButton>
+                     </children>
+                  </Pane>
+                  <StackPane layoutX="317.0" layoutY="120.0" prefHeight="450.0" prefWidth="705.0">
+                     <children>
+                        <ImageView fx:id="noBooksImage" fitHeight="362.0" fitWidth="596.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/no-books.png" />
+                           </image>
+                        </ImageView>
+                        <ScrollPane fx:id="bookCards" hbarPolicy="NEVER" hvalue="0.5" prefHeight="450.0" prefWidth="716.0" StackPane.alignment="CENTER">
+                           <content>
+                              <FlowPane id="cards-view" fx:id="booksCardView" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="15.0" prefHeight="448.0" prefWidth="737.0" vgap="15.0" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </StackPane>
+                  <Pane layoutX="233.0" layoutY="70.0" prefHeight="44.0" prefWidth="532.0">
+                     <children>
+                        <Label id="filter" layoutX="41.0" layoutY="13.0" text="Filter by: " />
+                        <JFXComboBox id="filter-rating" fx:id="ratingComboBox" labelFloat="true" layoutX="334.0" layoutY="9.0" onAction="#filter" prefHeight="30.0" prefWidth="190.0" promptText="Rating">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXComboBox>
+                        <JFXComboBox id="filter-status" fx:id="statusComboBox" labelFloat="true" layoutX="122.0" layoutY="9.0" onAction="#filter" prefHeight="30.0" prefWidth="190.0" promptText="Status">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXComboBox>
+                        <Pane id="filter-icon" layoutX="14.0" layoutY="9.0" prefHeight="26.0" prefWidth="29.0" />
+                     </children>
+                  </Pane>
+               </Pane>
+            </center>
+            <top>
+               <Pane id="navbar" prefHeight="100.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+                  <Pane id="logo" layoutX="43.0" layoutY="13.0" prefHeight="73.0" prefWidth="73.0" />
+                  <Label id="title" layoutX="73.0" layoutY="21.0" prefHeight="60.0" prefWidth="317.0" text="My Readings" />
+                  <Pane id="avatar" fx:id="avatar" layoutX="899.0" layoutY="14.0" onMouseClicked="#showPopupMenu" prefHeight="70.0" prefWidth="70.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Pane>
+               </Pane>
+            </top>
+         </BorderPane>
+         <HBox id="tool-bar" fx:id="toolBar" alignment="CENTER_RIGHT" onMouseEntered="#move" prefHeight="26.0" prefWidth="1024.0">
+            <children>
+               <JFXButton id="min" onAction="#minimize" ripplerFill="WHITE" text=" ">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </JFXButton>
+               <JFXButton id="close" onAction="#close" ripplerFill="WHITE" text=" ">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </JFXButton>
+            </children>
+         </HBox>
+      </AnchorPane>
+   </children>
+   <stylesheets>
+      <URL value="@../styles/home.css" />
+      <URL value="@../styles/global.css" />
+   </stylesheets>
+</StackPane>

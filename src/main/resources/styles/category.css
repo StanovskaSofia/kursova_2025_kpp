@@ -1,0 +1,155 @@
+#navbar {
+    -fx-background-color: main-color;
+    -fx-border-radius: 0pt 0pt 20pt 20pt;
+    -fx-background-radius: 0pt 0pt 20pt 20pt;
+    -fx-alignment: center;
+}
+
+#logo {
+    -fx-background-image: url("../images/white-logo.png");
+    -fx-background-color: none;
+    -fx-background-position: center center;
+    -fx-background-size: 80;
+}
+
+.root.dark-theme #logo {
+    -fx-background-image: url("../images/black-logo.png");
+}
+
+#title {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Nunito SemiBold";
+    -fx-alignment: center;
+    -fx-text-fill: text-fill-1;
+}
+
+#avatar {
+    -fx-border-radius: 15pt 15pt 0 0;
+    -fx-background-radius: 15pt 15pt 0 0;
+    -fx-background-image: url("../icons/avatar.png");
+    -fx-background-color: none;
+    -fx-background-position: center center;
+    -fx-background-size: 70;
+    -fx-background-repeat: no-repeat;
+}
+
+#delete {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../icons/delete.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 32;
+    -fx-background-position: center;
+}
+
+.root.dark-theme #avatar {
+    -fx-background-image: url("../icons/avatar__dark-theme.png");
+}
+
+#back {
+    -fx-background-image: url("../icons/back.png");
+}
+
+.root.dark-theme #back {
+    -fx-background-image: url("../icons/back__dark-theme.png");
+}
+
+#category-lbl {
+    -fx-font-size: 15pt;
+    -fx-font-family: "Nunito Bold";
+    -fx-text-fill: text-fill-2;
+}
+
+.root.dark-theme #category-lbl {
+    -fx-text-fill: gray-1;
+}
+
+#number-of-books-lbl, #number-of-books {
+    -fx-text-fill: text-fill-2;
+    -fx-font-size: 10pt;
+    -fx-font-family: "Nunito SemiBold";
+}
+
+.root.dark-theme #number-of-books-lbl {
+    -fx-text-fill: gray-1;
+}
+
+#number-of-books {
+    -fx-text-fill: main-color;
+}
+
+.separator .line {
+    -fx-background-color: gray-2;
+    -fx-pref-height: 2.5;
+    -fx-border-color: null ;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#cards-view {
+    -fx-background-color: background-color;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: background-color;
+    -fx-border-color: background-color;
+    -fx-background-radius: 0.0em;
+    -fx-border-radius: 2.0em;
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.0em;
+    -fx-padding: 0.0 10.0 0.0 0.0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0.15em 0.0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-shape: "";
+    -fx-padding: 0.0 0.15em;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: gray-2;
+    -fx-background-insets: 4.0, 0.0, 0.0;
+    -fx-background-radius: 4.0em;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: gray-1;
+    -fx-background-insets: 4.0, 0.0, 0.0;
+    -fx-background-radius: 4.0em;
+}
+
+/* ===== СВІТЛА ТЕМА (за замовчуванням) ===== */
+#change-image {
+    -fx-background-color: rgba(0, 0, 0, 0.08);
+    -fx-text-fill: #3a2f2a;
+    -fx-background-radius: 8;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+
+#change-image:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.14);
+}
+
+
+/* ===== ТЕМНА ТЕМА ===== */
+.root.dark-theme #change-image {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-text-fill: #f1e9c9;
+}
+
+.root.dark-theme #change-image:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.20);
+}
+

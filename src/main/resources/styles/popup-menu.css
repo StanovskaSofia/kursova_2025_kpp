@@ -1,0 +1,63 @@
+/* ====== POPUP ROOT (MENU) ====== */
+#parent, .popup-root {
+    -fx-font-family: "Nunito SemiBold";
+    -fx-font-size: 10pt;
+
+    -fx-background-color: #F3EED6;       /* light background */
+    -fx-background-radius: 10pt;
+    -fx-border-radius: 10pt;
+
+    -fx-border-color: rgba(0,0,0,0.10);
+    -fx-border-width: 1;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.22), 12, 0.12, 0, 6);
+}
+
+/* Dark theme (коли на корені сцени є dark-theme) */
+.root.dark-theme #parent,
+.root.dark-theme .popup-root {
+    -fx-background-color: #2E2A27;       /* dark background */
+    -fx-border-color: rgba(255,255,255,0.10);
+}
+
+/* ====== TEXT COLORS ====== */
+#parent Label,
+.popup-root Label {
+    -fx-text-fill: #3A342F;             /* light text */
+}
+
+.root.dark-theme #parent Label,
+.root.dark-theme .popup-root Label {
+    -fx-text-fill: #EDE6D0;             /* dark text */
+}
+
+/* ====== ITEM HOVER ====== */
+.item:hover {
+    -fx-background-color: rgba(101, 82, 71, 0.10); /* light hover */
+}
+
+.root.dark-theme .item:hover {
+    -fx-background-color: rgba(255,255,255,0.08); /* dark hover */
+}
+
+/* Rounded corners on hover for first/last items */
+#my-account-item:hover {
+    -fx-border-radius: 10pt 10pt 0pt 0pt;
+    -fx-background-radius: 10pt 10pt 0pt 0pt;
+}
+
+#logout-item:hover {
+    -fx-border-radius: 0pt 0pt 10pt 10pt;
+    -fx-background-radius: 0pt 0pt 10pt 10pt;
+}
+
+/* ====== SEPARATOR ====== */
+.separator .line {
+    -fx-background-color: rgba(0,0,0,0.10);
+    -fx-pref-height: 2;
+    -fx-border-color: null;
+}
+
+.root.dark-theme .separator .line {
+    -fx-background-color: rgba(255,255,255,0.10);
+}

@@ -1,0 +1,48 @@
+#main {
+    -fx-background-color: surface-color;
+    -fx-border-color: rgba(101, 82, 71, 0.22);
+    -fx-border-radius: 16pt;
+    -fx-background-radius: 16pt;
+    -fx-effect: dropshadow(three-pass-box, shadow-color, 12, 0.08, 0, 5);
+}
+
+.root.dark-theme #main {
+    -fx-background-color: surface-color;
+    -fx-border-color: rgba(241, 233, 201, 0.14);
+}
+
+#bottom-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.root.dark-theme #bottom-pane {
+    -fx-background-color: transparent;
+}
+
+
+.root.dark-theme #bottom-pane {
+    -fx-background-color: gray-2;
+}
+
+#add {
+    -fx-background-color: main-color;
+    -fx-text-fill: text-fill-1;
+    -fx-font-weight: 700;
+    -fx-font-size: 9pt;
+    -fx-border-radius: 30pt;
+    -fx-background-radius: 30pt;
+    -fx-effect: dropshadow(three-pass-box, shadow-color, 12, 0.08, 0, 5);
+}
+
+#book-name {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Nunito ExtraBold";
+    -fx-text-fill: text-fill-2;
+}
+
+#author {
+    -fx-text-fill: subtext-color;
+    -fx-font-size: 9pt;
+}
