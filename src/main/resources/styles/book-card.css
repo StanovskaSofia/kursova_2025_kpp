@@ -20,6 +20,26 @@
     -fx-background-repeat: no-repeat;
 }
 
+.list-badge {
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-text-fill: dark-orange-1;
+    -fx-font-family: "Nunito SemiBold";
+    -fx-font-size: 8pt;
+    -fx-border-radius: 10pt;
+    -fx-background-radius: 10pt;
+    -fx-padding: 2 6 2 6;
+}
+
+.list-badge-extra {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+    -fx-text-fill: white;
+    -fx-font-family: "Nunito SemiBold";
+    -fx-font-size: 8pt;
+    -fx-border-radius: 10pt;
+    -fx-background-radius: 10pt;
+    -fx-padding: 2 6 2 6;
+}
+
 #status {
     -fx-background-color: light-orange-1;
     -fx-padding: 6;

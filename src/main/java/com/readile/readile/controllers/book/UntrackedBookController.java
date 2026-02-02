@@ -6,10 +6,15 @@ import com.readile.readile.controllers.PopupMenuController;
 import com.readile.readile.controllers.ToolBar;
 import com.readile.readile.models.book.Status;
 import com.readile.readile.models.book.UserBook;
+import com.readile.readile.models.book.list.BookList;
+import com.readile.readile.models.book.list.BookListEntry;
+import com.readile.readile.services.implementation.book.BookListEntryService;
+import com.readile.readile.services.implementation.book.BookListService;
 import com.readile.readile.services.implementation.book.UserBookService;
 import com.readile.readile.views.Intent;
 import com.readile.readile.views.Observer;
 import com.readile.readile.views.StageManager;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -22,11 +27,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.controlsfx.control.CheckComboBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Controller
@@ -48,6 +55,8 @@ public class UntrackedBookController extends ToolBar implements Initializable, F
     @FXML
     public Label pages;
     @FXML
+    public CheckComboBox<String> listsComboBox;
+    @FXML
     public Pane avatar;
     @FXML
     public HBox toolBar;
@@ -59,6 +68,10 @@ public class UntrackedBookController extends ToolBar implements Initializable, F
     StageManager stageManager;
     @Autowired
     UserBookService userBookService;
+    @Autowired
+    BookListService bookListService;
+    @Autowired
+    BookListEntryService bookListEntryService;
     // SERVICES --- >
 
     @Override
@@ -72,6 +85,17 @@ public class UntrackedBookController extends ToolBar implements Initializable, F
 
         UserBook currentBook = userBookService.findById(Intent.bookId);
 
+        List<BookList> lists = bookListService.findByUser(Intent.activeUser);
+        lists.forEach(bookList -> listsComboBox.getItems().add(bookList.getName()));
+
+        List<BookList> bookLists = bookListEntryService.findByUserBook(currentBook).stream()
+                .map(BookListEntry::getBookList)
+                .toList();
+
+        bookLists.forEach(bookList ->
+                listsComboBox.checkModelProperty().get().check(bookList.getName())
+        );
+
         String path = "\"" + getClass().getResource(currentBook.getBook().getCoverId()).toExternalForm() + "\"";
         bookCover.setStyle("-fx-background-image: url("+path+");");
         bookName.setText(currentBook.getBook().getName());
@@ -83,6 +107,22 @@ public class UntrackedBookController extends ToolBar implements Initializable, F
         pages.setText(String.valueOf(currentBook.getBook().getLength()));
         authors.setText(authors.getText().substring(0, authors.getText().length()-2));
         pages.setText(String.valueOf(currentBook.getBook().getLength()));
+
+        listsComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<? super String>) event -> {
+            bookListEntryService.deleteInBatch(bookListEntryService.findByUserBook(currentBook));
+
+            List<String> checkedListNames = listsComboBox.getCheckModel().getCheckedItems();
+
+            List<BookList> listSelection = bookListService.findByUser(Intent.activeUser)
+                    .stream()
+                    .filter(bookList -> checkedListNames.stream()
+                            .anyMatch(name -> bookList.getName().equals(name)))
+                    .toList();
+
+            listSelection.forEach(bookList ->
+                    bookListEntryService.save(new BookListEntry(bookList, currentBook))
+            );
+        });
     }
 
     public void startTracking() {
@@ -96,6 +136,7 @@ public class UntrackedBookController extends ToolBar implements Initializable, F
     @FXML
     void deleteBook() {
         UserBook currentBook = userBookService.findById(Intent.bookId);
+        bookListEntryService.deleteInBatch(bookListEntryService.findByUserBook(currentBook));
         userBookService.delete(currentBook);
         back();
     }

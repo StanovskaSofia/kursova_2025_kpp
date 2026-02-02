@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDialog?>
 <?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import java.net.URL?>
 <?import javafx.scene.Cursor?>
@@ -18,6 +19,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <StackPane id="root" fx:id="root" styleClass="dark-theme" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.readile.readile.controllers.HomeScreenController">
@@ -61,6 +63,41 @@
                               </ScrollPane>
                            </children>
                         </StackPane>
+                     </children>
+                  </Pane>
+               </children>
+            </JFXDialogLayout>
+         </children>
+      </JFXDialog>
+      <JFXDialog fx:id="listsDialog" maxHeight="706.0" maxWidth="1024.0" minHeight="706.0" minWidth="1024.0" prefHeight="706.0" prefWidth="1024.0">
+         <children>
+            <JFXDialogLayout maxHeight="430.0" maxWidth="560.0" minHeight="430.0" minWidth="560.0" prefHeight="430.0" prefWidth="560.0">
+               <children>
+                  <Pane id="main" maxHeight="430.0" maxWidth="560.0" minHeight="430.0" minWidth="560.0" prefHeight="430.0" prefWidth="560.0">
+                     <children>
+                        <Label id="list-dialog-title" layoutX="24.0" layoutY="18.0" text="My Lists" />
+                        <JFXListView fx:id="listsView" layoutX="24.0" layoutY="54.0" prefHeight="255.0" prefWidth="512.0" />
+                        <JFXTextField id="list-name-field" fx:id="listNameField" layoutX="24.0" layoutY="327.0" prefHeight="37.0" prefWidth="356.0" promptText="List name" />
+                        <HBox layoutX="24.0" layoutY="375.0" spacing="12.0">
+                           <children>
+                              <JFXButton id="list-add-btn" onAction="#addList" prefHeight="36.0" prefWidth="96.0" text="Add">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </JFXButton>
+                              <JFXButton id="list-rename-btn" onAction="#renameList" prefHeight="36.0" prefWidth="96.0" text="Rename">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </JFXButton>
+                              <JFXButton id="list-delete-btn" onAction="#deleteList" prefHeight="36.0" prefWidth="96.0" text="Delete">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </JFXButton>
+                           </children>
+                        </HBox>
+                        <Label id="list-error" fx:id="listError" layoutX="392.0" layoutY="334.0" text="List name already exists" visible="false" />
                      </children>
                   </Pane>
                </children>
@@ -111,10 +148,10 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </JFXButton>
-                         <JFXButton id="browse-categories-btn"
+                        <JFXButton id="browse-categories-btn"
                                     layoutX="47.0" layoutY="326.0"
                                     onAction="#browseCategories"
-                                    prefHeight="76.0"
+                                    prefHeight="60.0"
                                     prefWidth="215.0"
                                     text="Categories"
                                     wrapText="false"
@@ -123,6 +160,18 @@
                                  <Cursor fx:constant="HAND"/>
                              </cursor>
                          </JFXButton>
+                        <JFXButton id="browse-lists-btn"
+                                   layoutX="47.0" layoutY="398.0"
+                                   onAction="#openListsDialog"
+                                   prefHeight="50.0"
+                                   prefWidth="215.0"
+                                   text="Lists"
+                                   wrapText="false"
+                                   alignment="CENTER">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </JFXButton>
                      </children>
                   </Pane>
                   <StackPane layoutX="317.0" layoutY="120.0" prefHeight="450.0" prefWidth="705.0">
@@ -139,7 +188,7 @@
                         </ScrollPane>
                      </children>
                   </StackPane>
-                  <Pane layoutX="233.0" layoutY="70.0" prefHeight="44.0" prefWidth="532.0">
+                  <Pane layoutX="233.0" layoutY="70.0" prefHeight="70.0" prefWidth="532.0">
                      <children>
                         <Label id="filter" layoutX="41.0" layoutY="13.0" text="Filter by: " />
                         <JFXComboBox id="filter-rating" fx:id="ratingComboBox" labelFloat="true" layoutX="334.0" layoutY="9.0" onAction="#filter" prefHeight="30.0" prefWidth="190.0" promptText="Rating">
@@ -148,6 +197,11 @@
                            </cursor>
                         </JFXComboBox>
                         <JFXComboBox id="filter-status" fx:id="statusComboBox" labelFloat="true" layoutX="122.0" layoutY="9.0" onAction="#filter" prefHeight="30.0" prefWidth="190.0" promptText="Status">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXComboBox>
+                        <JFXComboBox id="filter-list" fx:id="listComboBox" labelFloat="true" layoutX="122.0" layoutY="40.0" onAction="#filter" prefHeight="30.0" prefWidth="402.0" promptText="Показати тільки зі списку">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

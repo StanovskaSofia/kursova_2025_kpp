@@ -12,7 +12,11 @@ import com.readile.readile.models.book.Status;
 import com.readile.readile.models.book.UserBook;
 import com.readile.readile.models.book.category.BookCategory;
 import com.readile.readile.models.book.category.Category;
+import com.readile.readile.models.book.list.BookList;
+import com.readile.readile.models.book.list.BookListEntry;
 import com.readile.readile.services.implementation.book.BookCategoryService;
+import com.readile.readile.services.implementation.book.BookListEntryService;
+import com.readile.readile.services.implementation.book.BookListService;
 import com.readile.readile.services.implementation.book.CategoryService;
 import com.readile.readile.services.implementation.book.HighlightService;
 import com.readile.readile.services.implementation.book.UserBookService;
@@ -89,6 +93,8 @@ public class BookController extends ToolBar implements Initializable, FxControll
     @FXML
     public CheckComboBox<String> categoriesComboBox;
     @FXML
+    public CheckComboBox<String> listsComboBox;
+    @FXML
     public JFXDialog highlightDialog;
 
     // ✅ тепер список хайлайтів з об’єктами Highlight
@@ -107,6 +113,10 @@ public class BookController extends ToolBar implements Initializable, FxControll
     private BookCategoryService bookCategoryService;
     @Autowired
     private UserBookService userBookService;
+    @Autowired
+    private BookListService bookListService;
+    @Autowired
+    private BookListEntryService bookListEntryService;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -123,6 +133,18 @@ public class BookController extends ToolBar implements Initializable, FxControll
 
         UserBook currentBook = userBookService.findById(Intent.bookId);
         CatalogBook catalogBook = currentBook.getBook();
+
+        // Lists
+        List<BookList> lists = bookListService.findByUser(Intent.activeUser);
+        lists.forEach(bookList -> listsComboBox.getItems().add(bookList.getName()));
+
+        List<BookList> bookLists = bookListEntryService.findByUserBook(currentBook).stream()
+                .map(BookListEntry::getBookList)
+                .toList();
+
+        bookLists.forEach(bookList ->
+                listsComboBox.checkModelProperty().get().check(bookList.getName())
+        );
 
         // Categories
         List<Category> categories = categoryService.findGlobalAndUserCategories(Intent.activeUser);
@@ -175,6 +197,23 @@ public class BookController extends ToolBar implements Initializable, FxControll
         // Dialog setup
         highlightDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         highlightDialog.setDialogContainer(root);
+
+        // Update lists on change
+        listsComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<? super String>) event -> {
+            bookListEntryService.deleteInBatch(bookListEntryService.findByUserBook(currentBook));
+
+            List<String> checkedListNames = listsComboBox.getCheckModel().getCheckedItems();
+
+            List<BookList> listSelection = bookListService.findByUser(Intent.activeUser)
+                    .stream()
+                    .filter(bookList -> checkedListNames.stream()
+                            .anyMatch(name -> bookList.getName().equals(name)))
+                    .toList();
+
+            listSelection.forEach(bookList ->
+                    bookListEntryService.save(new BookListEntry(bookList, currentBook))
+            );
+        });
 
         // Update categories on change
         categoriesComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<? super String>) event -> {
@@ -307,6 +346,7 @@ public class BookController extends ToolBar implements Initializable, FxControll
     public void deleteBook() {
         UserBook currentBook = userBookService.findById(Intent.bookId);
         highlightService.deleteInBatch(highlightService.findByUserBook(currentBook));
+        bookListEntryService.deleteInBatch(bookListEntryService.findByUserBook(currentBook));
         userBookService.delete(currentBook);
         back();
     }

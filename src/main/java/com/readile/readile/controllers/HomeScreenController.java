@@ -13,7 +13,11 @@ import com.readile.readile.models.book.CatalogBook;
 import com.readile.readile.models.book.UserBook;
 import com.readile.readile.models.book.Rating;
 import com.readile.readile.models.book.Status;
+import com.readile.readile.models.book.list.BookList;
+import com.readile.readile.models.book.list.BookListEntry;
 import com.readile.readile.services.implementation.book.CatalogBookService;
+import com.readile.readile.services.implementation.book.BookListEntryService;
+import com.readile.readile.services.implementation.book.BookListService;
 import com.readile.readile.services.implementation.book.UserBookService;
 import com.readile.readile.views.Observer;
 import com.readile.readile.views.Intent;
@@ -36,6 +40,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.scene.shape.Circle;
 import net.rgielen.fxweaver.core.FxmlView;
+import com.jfoenix.controls.JFXListView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -44,8 +49,10 @@ import org.springframework.util.StringUtils;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.ResourceBundle;
 
 import static com.readile.readile.models.book.Status.*;
@@ -61,9 +68,13 @@ public class HomeScreenController extends ToolBar implements Initializable, FxCo
     @FXML public StackPane charts;
     @FXML public ImageView chartEmptyImage, noBooksImage;
     @FXML public FlowPane booksCardView;
-    @FXML public JFXComboBox<String> ratingComboBox, statusComboBox;
+    @FXML public JFXComboBox<String> ratingComboBox, statusComboBox, listComboBox;
     @FXML public Pane avatar;
     @FXML public ScrollPane bookCards;
+    @FXML public JFXDialog listsDialog;
+    @FXML public JFXListView<String> listsView;
+    @FXML public JFXTextField listNameField;
+    @FXML public Label listError;
 
     // Modal Window attributes
     @FXML public JFXTextField searchField;
@@ -78,6 +89,8 @@ public class HomeScreenController extends ToolBar implements Initializable, FxCo
     @Autowired StageManager stageManager;
     @Autowired UserBookService userBookService;
     @Autowired CatalogBookService catalogBookService;
+    @Autowired BookListService bookListService;
+    @Autowired BookListEntryService bookListEntryService;
     // SERVICES --- >
 
     private List<UserBook> bookList;
@@ -93,24 +106,7 @@ public class HomeScreenController extends ToolBar implements Initializable, FxCo
 
     @FXML
     public void searchForBook() {
-        if (!search.getText().trim().equals("")) {
-            bookCards.setVisible(true);
-            List<UserBook> searchResult = bookList.stream()
-                    .filter(book -> book.getBook().getName().toLowerCase()
-                            .contains(search.getText().toLowerCase())).toList();
-
-            booksCardView.getChildren().clear();
-            if (searchResult.size() == 0)
-                bookCards.setVisible(false);
-            else {
-                for (UserBook record : searchResult) {
-                    try {
-                        booksCardView.getChildren().add(getBookCard(record));
-                    } catch (IOException ignored) {
-                    }
-                }
-            }
-        } else loadBooksAndChart();
+        applyFilters();
     }
 
     @FXML
@@ -136,7 +132,7 @@ public class HomeScreenController extends ToolBar implements Initializable, FxCo
                         Intent.clearCatalogResults();
                         booksCardView.getChildren().clear();
                         bookList = userBookService.findAllByUser(Intent.activeUser);
-                        loadBooksAndChart();
+                        applyFilters();
                     }
             );
         } catch (Exception ignored) {
@@ -147,6 +143,14 @@ public class HomeScreenController extends ToolBar implements Initializable, FxCo
     public void browseCategories() {
         Intent.pushClosedScene(HomeScreenController.class);
         stageManager.rebuildStage(CategoriesController.class);
+    }
+
+    @FXML
+    public void openListsDialog() {
+        refreshListsView();
+        listNameField.clear();
+        listError.setVisible(false);
+        listsDialog.show();
     }
 
     // Modal window API search
@@ -227,7 +231,7 @@ public class HomeScreenController extends ToolBar implements Initializable, FxCo
         Platform.runLater(() -> {
             booksCardView.getChildren().clear();
             bookList = userBookService.findAllByUser(Intent.activeUser);
-            loadBooksAndChart();
+            applyFilters();
         });
 
         fetchNavAvatar();
@@ -243,9 +247,21 @@ public class HomeScreenController extends ToolBar implements Initializable, FxCo
                 "", "To Read", "Currently Reading", "Read"
         );
 
+        refreshListFilter();
+
         addBookDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
         addBookDialog.setDialogContainer(root);
         Intent.addNewBookDialog = addBookDialog;
+
+        listsDialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        listsDialog.setDialogContainer(root);
+
+        listsView.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue != null) {
+                listNameField.setText(newValue);
+                listError.setVisible(false);
+            }
+        });
     }
 
     private void fetchNavAvatar() {
@@ -264,53 +280,59 @@ public class HomeScreenController extends ToolBar implements Initializable, FxCo
         avatar.setClip(clip);
     }
 
-    private void loadBooksAndChart() {
+    private void loadBooksAndChart(List<UserBook> listToShow) {
+        List<UserBook> displayList = listToShow == null ? List.of() : listToShow;
         if (bookList.size() == 0) {
             booksCardView.getChildren().clear();
             bookCards.setVisible(false);
+            noBooksImage.setVisible(true);
             chartEmptyImage.setVisible(true);
         } else {
-            chartEmptyImage.setVisible(false);
-            bookCards.setVisible(true);
-
-            Map<Status, Integer> statusCount = new HashMap<>();
-            for (UserBook book : bookList) {
-                switch (book.getStatus()) {
-                    case CURRENTLY_READING -> {
-                        if (statusCount.containsKey(CURRENTLY_READING))
-                            statusCount.put(CURRENTLY_READING, statusCount.get(CURRENTLY_READING) + 1);
-                        else statusCount.put(CURRENTLY_READING, 1);
-                    }
-                    case TO_READ -> {
-                        if (statusCount.containsKey(TO_READ))
-                            statusCount.put(TO_READ, statusCount.get(TO_READ) + 1);
-                        else statusCount.put(TO_READ, 1);
-                    }
-                    case READ -> {
-                        if (statusCount.containsKey(READ))
-                            statusCount.put(READ, statusCount.get(READ) + 1);
-                        else statusCount.put(READ, 1);
-                    }
-                }
-            }
-
-            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-
-            statusCount.forEach((k, v) -> pieChartData.add(new PieChart.Data(statusLabel(k), v)));
-
-            final DoughnutChart chart = new DoughnutChart(pieChartData);
-            chart.setPrefSize(220, 220);
-            chart.setMinSize(220, 220);
-            chart.setMaxSize(220, 220);
-
-            chart.setLegendVisible(false);
-            chart.getStylesheets().add(String.valueOf(getClass().getResource("/styles/doughnut-chart.css")));
+            chartEmptyImage.setVisible(displayList.isEmpty());
+            noBooksImage.setVisible(displayList.isEmpty());
+            bookCards.setVisible(!displayList.isEmpty());
 
             charts.getChildren().clear();
-            charts.getChildren().add(chart);
+
+            if (!displayList.isEmpty()) {
+                Map<Status, Integer> statusCount = new HashMap<>();
+                for (UserBook book : displayList) {
+                    switch (book.getStatus()) {
+                        case CURRENTLY_READING -> {
+                            if (statusCount.containsKey(CURRENTLY_READING))
+                                statusCount.put(CURRENTLY_READING, statusCount.get(CURRENTLY_READING) + 1);
+                            else statusCount.put(CURRENTLY_READING, 1);
+                        }
+                        case TO_READ -> {
+                            if (statusCount.containsKey(TO_READ))
+                                statusCount.put(TO_READ, statusCount.get(TO_READ) + 1);
+                            else statusCount.put(TO_READ, 1);
+                        }
+                        case READ -> {
+                            if (statusCount.containsKey(READ))
+                                statusCount.put(READ, statusCount.get(READ) + 1);
+                            else statusCount.put(READ, 1);
+                        }
+                    }
+                }
+
+                ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+                statusCount.forEach((k, v) -> pieChartData.add(new PieChart.Data(statusLabel(k), v)));
+
+                final DoughnutChart chart = new DoughnutChart(pieChartData);
+                chart.setPrefSize(220, 220);
+                chart.setMinSize(220, 220);
+                chart.setMaxSize(220, 220);
+
+                chart.setLegendVisible(false);
+                chart.getStylesheets().add(String.valueOf(getClass().getResource("/styles/doughnut-chart.css")));
+
+                charts.getChildren().add(chart);
+            }
 
             booksCardView.getChildren().clear();
-            for (UserBook record : bookList) {
+            for (UserBook record : displayList) {
                 try {
                     booksCardView.getChildren().add(getBookCard(record));
                 } catch (IOException ignored) {
@@ -340,6 +362,8 @@ public class HomeScreenController extends ToolBar implements Initializable, FxCo
 
         ObservableList<Node> stars = ((GridPane) root.getChildren().get(3)).getChildren();
         setRating(book.getRating(), stars);
+
+        updateListBadges(root, book);
 
         return root;
     }
@@ -378,37 +402,188 @@ public class HomeScreenController extends ToolBar implements Initializable, FxCo
 
     @FXML
     public void filter() {
+        applyFilters();
+    }
+
+    @FXML
+    public void addList() {
+        String name = listNameField.getText().trim();
+        if (name.isEmpty()) {
+            listError.setVisible(true);
+            listError.setText("List name can't be empty");
+            return;
+        }
+
+        if (bookListService.findByUserAndName(Intent.activeUser, name) != null) {
+            listError.setVisible(true);
+            listError.setText("List name already exists");
+            return;
+        }
+
+        bookListService.save(new BookList(Intent.activeUser, name));
+        listNameField.clear();
+        listError.setVisible(false);
+        refreshListFilter();
+        refreshListsView();
+    }
+
+    @FXML
+    public void renameList() {
+        String selected = listsView.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            listError.setVisible(true);
+            listError.setText("Select a list to rename");
+            return;
+        }
+
+        String newName = listNameField.getText().trim();
+        if (newName.isEmpty()) {
+            listError.setVisible(true);
+            listError.setText("List name can't be empty");
+            return;
+        }
+
+        BookList existing = bookListService.findByUserAndName(Intent.activeUser, newName);
+        if (existing != null && !existing.getName().equals(selected)) {
+            listError.setVisible(true);
+            listError.setText("List name already exists");
+            return;
+        }
+
+        BookList list = bookListService.findByUserAndName(Intent.activeUser, selected);
+        if (list != null) {
+            list.setName(newName);
+            bookListService.update(list);
+        }
+
+        listError.setVisible(false);
+        refreshListFilter();
+        refreshListsView();
+    }
+
+    @FXML
+    public void deleteList() {
+        String selected = listsView.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            listError.setVisible(true);
+            listError.setText("Select a list to delete");
+            return;
+        }
+
+        BookList list = bookListService.findByUserAndName(Intent.activeUser, selected);
+        if (list != null) {
+            bookListService.delete(list);
+        }
+
+        listError.setVisible(false);
+        listNameField.clear();
+        refreshListFilter();
+        refreshListsView();
+    }
+
+    private void refreshListsView() {
+        listsView.getItems().clear();
+        bookListService.findByUser(Intent.activeUser).stream()
+                .map(BookList::getName)
+                .sorted()
+                .forEach(name -> listsView.getItems().add(name));
+    }
+
+    private void refreshListFilter() {
+        List<String> names = bookListService.findByUser(Intent.activeUser).stream()
+                .map(BookList::getName)
+                .sorted()
+                .toList();
+
+        listComboBox.getItems().clear();
+        listComboBox.getItems().add("Усі");
+        listComboBox.getItems().addAll(names);
+        listComboBox.getSelectionModel().selectFirst();
+        applyFilters();
+    }
+
+    private void applyFilters() {
+        if (bookList == null) {
+            loadBooksAndChart(List.of());
+            return;
+        }
+
         int rating = ratingComboBox.getSelectionModel().getSelectedIndex();
         int status = statusComboBox.getSelectionModel().getSelectedIndex();
+        String selectedList = listComboBox.getSelectionModel().getSelectedItem();
+        String query = search.getText() == null ? "" : search.getText().trim().toLowerCase();
 
-        bookCards.setVisible(true);
-        List<UserBook> searchResult;
+        List<UserBook> filtered = bookList.stream()
+                .filter(book -> {
+                    if (query.isEmpty()) {
+                        return true;
+                    }
+                    String name = book.getBook().getName() == null ? "" : book.getBook().getName().toLowerCase();
+                    String authors = book.getBook().getAuthors() == null ? "" : book.getBook().getAuthors().toLowerCase();
+                    return name.contains(query) || authors.contains(query);
+                })
+                .filter(book -> rating <= 0 || book.getRating().ordinal() + 1 == rating)
+                .filter(book -> status <= 0 || book.getStatus().ordinal() + 1 == status)
+                .toList();
 
-        if (rating <= 0 && status <= 0) {
-            searchResult = bookList.stream().toList();
-        } else if (rating <= 0) {
-            searchResult = bookList.stream()
-                    .filter(book -> book.getStatus().ordinal() + 1 == status).toList();
-        } else if (status <= 0) {
-            searchResult = bookList.stream()
-                    .filter(book -> book.getRating().ordinal() + 1 == rating).toList();
-        } else {
-            searchResult = bookList.stream()
-                    .filter(book -> book.getStatus().ordinal() + 1 == status &&
-                            book.getRating().ordinal() + 1 == rating).toList();
-        }
-
-        booksCardView.getChildren().clear();
-
-        if (searchResult.size() == 0) {
-            bookCards.setVisible(false);
-        } else {
-            for (UserBook record : searchResult) {
-                try {
-                    booksCardView.getChildren().add(getBookCard(record));
-                } catch (IOException ignored) {
-                }
+        if (selectedList != null && !selectedList.equals("Усі")) {
+            BookList list = bookListService.findByUserAndName(Intent.activeUser, selectedList);
+            if (list != null) {
+                Set<Long> allowedIds = new HashSet<>();
+                bookListEntryService.findByBookList(list)
+                        .forEach(entry -> allowedIds.add(entry.getUserBook().getId()));
+                filtered = filtered.stream()
+                        .filter(book -> allowedIds.contains(book.getId()))
+                        .toList();
             }
         }
+
+        loadBooksAndChart(filtered);
+    }
+
+    private void updateListBadges(Pane root, UserBook book) {
+        List<BookList> lists = bookListEntryService.findByUserBook(book).stream()
+                .map(BookListEntry::getBookList)
+                .toList();
+
+        List<String> badgeLabels = lists.stream()
+                .map(this::formatListBadge)
+                .toList();
+
+        Label badge1 = (Label) root.lookup("#list-badge-1");
+        Label badge2 = (Label) root.lookup("#list-badge-2");
+        Label badgeExtra = (Label) root.lookup("#list-badge-extra");
+
+        if (badge1 == null || badge2 == null || badgeExtra == null) {
+            return;
+        }
+
+        badge1.setVisible(false);
+        badge2.setVisible(false);
+        badgeExtra.setVisible(false);
+
+        if (!badgeLabels.isEmpty()) {
+            badge1.setText(badgeLabels.get(0));
+            badge1.setVisible(true);
+        }
+        if (badgeLabels.size() > 1) {
+            badge2.setText(badgeLabels.get(1));
+            badge2.setVisible(true);
+        }
+        if (badgeLabels.size() > 2) {
+            badgeExtra.setText("+" + (badgeLabels.size() - 2));
+            badgeExtra.setVisible(true);
+        }
+    }
+
+    private String formatListBadge(BookList bookList) {
+        String name = bookList.getName();
+        return switch (name) {
+            case "Улюблені" -> "❤️";
+            case "Кинуто" -> "🚫";
+            case "Не сподобалося" -> "👎";
+            case "Таке собі" -> "😐";
+            default -> name.length() > 10 ? name.substring(0, 10) + "…" : name;
+        };
     }
 }

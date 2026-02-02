@@ -62,12 +62,17 @@
                      </rotationAxis>
                   </HBox>
                   <JFXSpinner fx:id="progress" layoutX="142.0" layoutY="513.0" prefHeight="50.0" prefWidth="67.0" progress="0.0" startingAngle="90.0" />
+                  <Label id="meta-bold" alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="412.0" layoutY="404.0" prefHeight="23.0" prefWidth="127.0" text="Lists:" wrapText="true" />
                   <Label id="meta-bold" alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="412.0" layoutY="454.0" prefHeight="23.0" prefWidth="127.0" text="Categories:" wrapText="true" />
                   <Label id="meta-bold" alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="412.0" layoutY="504.0" prefHeight="23.0" prefWidth="127.0" text="Highlights:" wrapText="true" />
                   <JFXButton id="highlight" layoutX="508.0" layoutY="499.0" onAction="#showHighlights" prefHeight="25.0" prefWidth="25.0" text=" ">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></JFXButton>
+                  <CheckComboBox id="lists" fx:id="listsComboBox" layoutX="520.0" layoutY="397.0" prefHeight="30.0" prefWidth="192.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></CheckComboBox>
                   <CheckComboBox id="categories" fx:id="categoriesComboBox" layoutX="520.0" layoutY="447.0" prefHeight="30.0" prefWidth="192.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />

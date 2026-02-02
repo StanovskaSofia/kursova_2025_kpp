@@ -75,7 +75,7 @@
     -fx-background-image: url("../icons/filter__dark-theme.png");
 }
 
-#filter-rating, #filter-status {
+#filter-rating, #filter-status, #filter-list {
     -fx-font-family: "Nunito SemiBold";
     -fx-font-size: 10pt;
     -jfx-unfocus-color: main-color;
@@ -142,6 +142,58 @@
 .root.dark-theme #browse-categories-btn:pressed {
     -fx-background-color: secondary-color;
     -fx-text-fill: text-fill-1;
+}
+
+#browse-lists-btn {
+    -fx-background-color: light-orange-1;
+    -fx-text-fill: dark-orange-1;
+    -fx-font-weight: 700;
+    -fx-font-size: 11pt;
+    -fx-border-radius: 16pt;
+    -fx-background-radius: 16pt;
+    -fx-effect: dropshadow(three-pass-box, shadow-color, 14, 0.08, 0, 5);
+}
+
+#browse-lists-btn:hover {
+    -fx-background-color: derive(light-orange-1, -6%);
+}
+
+#list-dialog-title {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Nunito SemiBold";
+    -fx-text-fill: text-fill-2;
+}
+
+#list-name-field {
+    -fx-font-size: 11pt;
+    -jfx-unfocus-color: gray-2;
+    -jfx-focus-color: light-orange-1;
+    -fx-prompt-text-fill: subtext-color;
+    -fx-text-fill: text-fill-2;
+    -jfx-label-float: true;
+    -fx-background-color: light-orange-3;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-padding: 6 12 6 12;
+}
+
+#list-add-btn, #list-rename-btn, #list-delete-btn {
+    -fx-background-color: main-color;
+    -fx-text-fill: text-fill-1;
+    -fx-font-family: "Nunito SemiBold";
+    -fx-font-size: 10pt;
+    -fx-border-radius: 12pt;
+    -fx-background-radius: 12pt;
+}
+
+#list-delete-btn {
+    -fx-background-color: dark-orange-1;
+}
+
+#list-error {
+    -fx-text-fill: dark-orange-1;
+    -fx-font-family: "Nunito SemiBold";
+    -fx-font-size: 9pt;
 }
 
 
