@@ -2,6 +2,7 @@ package com.readile.readile.models.user;
 
 import com.readile.readile.models.book.UserBook;
 import com.readile.readile.models.book.category.Category;
+import com.readile.readile.models.book.list.BookList;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,6 +43,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     Set<Category> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    Set<BookList> bookLists = new HashSet<>();
 
     @Column(length = 6)
     private String registration;

@@ -42,13 +42,14 @@ public class OAuth2Authentication implements FxController {
                 user.setProfileImage(profileImage);
                 user.setTheme((byte) 1);
                 user.setRegistration("GOOGLE");
-                userService.save(user);
+                User savedUser = userService.save(user);
+                userService.ensureDefaultBookLists(savedUser);
 
-                LoginInfo entry = new LoginInfo(userService.findByEmail(email), "pass");
+                LoginInfo entry = new LoginInfo(savedUser, "pass");
                 loginInfoService.save(entry);
 
                 Intent.pushClosedScene(GoogleSignInController.class);
-                Intent.activeUser = userService.findByEmail(email);
+                Intent.activeUser = savedUser;
             } else {
                 if (userService.findByEmail(email).getRegistration().equals("EMAIL"))
                     throw new Exception();

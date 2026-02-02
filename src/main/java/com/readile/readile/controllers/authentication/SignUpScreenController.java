@@ -71,12 +71,13 @@ public class SignUpScreenController extends ToolBar implements FxController, Ini
                     user.setProfileImage(String.valueOf(getClass().getResource("/images/profile-image.png")));
                     user.setTheme((byte) 1);
                     user.setRegistration("EMAIL");
-                    userService.save(user);
+                    User savedUser = userService.save(user);
+                    userService.ensureDefaultBookLists(savedUser);
 
-                    LoginInfo entry = new LoginInfo(userService.findByEmail(email.getText()), password.getText());
+                    LoginInfo entry = new LoginInfo(savedUser, password.getText());
                     loginInfoService.save(entry);
 
-                    Intent.activeUser = userService.findByEmail(email.getText());
+                    Intent.activeUser = savedUser;
                     Intent.pushClosedScene(SignUpScreenController.class);
                     stageManager.rebuildStage(HomeScreenController.class);
                 } catch (Exception exception) {

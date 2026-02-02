@@ -13,6 +13,8 @@ import com.readile.readile.models.user.LoginInfo;
 import com.readile.readile.models.user.User;
 import com.readile.readile.services.implementation.authentication.LoginInfoService;
 import com.readile.readile.services.implementation.book.BookCategoryService;
+import com.readile.readile.services.implementation.book.BookListEntryService;
+import com.readile.readile.services.implementation.book.BookListService;
 import com.readile.readile.services.implementation.book.CategoryService;
 import com.readile.readile.services.implementation.book.HighlightService;
 import com.readile.readile.services.implementation.book.UserBookService;
@@ -101,6 +103,10 @@ public class AccountController extends ToolBar implements Initializable, FxContr
     HighlightService highlightService;
     @Autowired
     UserBookService userBookService;
+    @Autowired
+    BookListService bookListService;
+    @Autowired
+    BookListEntryService bookListEntryService;
     // SERVICES --- >
 
     @Override
@@ -176,6 +182,8 @@ public class AccountController extends ToolBar implements Initializable, FxContr
         categoryService.findByUser(Intent.activeUser).forEach(category -> bookCategoryService.deleteInBatch(bookCategoryService.findAllByCategory(category)));
         categoryService.deleteInBatch(categoryService.findByUser(Intent.activeUser));
         userBookService.findAllByUser(Intent.activeUser).forEach(book -> highlightService.deleteInBatch(highlightService.findByUserBook(book)));
+        userBookService.findAllByUser(Intent.activeUser).forEach(book -> bookListEntryService.deleteInBatch(bookListEntryService.findByUserBook(book)));
+        bookListService.deleteInBatch(bookListService.findByUser(Intent.activeUser));
         userBookService.deleteInBatch(userBookService.findAllByUser(Intent.activeUser));
         userService.delete(Intent.activeUser);
         new File(Intent.activeUser.getProfileImage().replace("file:/","").replace("/", "\\")).delete();

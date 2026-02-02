@@ -1,8 +1,10 @@
 package com.readile.readile.services.implementation.user;
 
 import com.readile.readile.models.user.User;
+import com.readile.readile.models.book.list.BookList;
 import com.readile.readile.repositories.UserRepository;
 import com.readile.readile.services.CrudService;
+import com.readile.readile.services.implementation.book.BookListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.List;
 public class UserService implements CrudService<User> {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    BookListService bookListService;
 
     @Override
     public User save(User entity) {
@@ -50,5 +54,14 @@ public class UserService implements CrudService<User> {
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public void ensureDefaultBookLists(User user) {
+        List<String> defaultNames = List.of("Улюблені", "Кинуто", "Не сподобалося", "Таке собі");
+        defaultNames.forEach(name -> {
+            if (bookListService.findByUserAndName(user, name) == null) {
+                bookListService.save(new BookList(user, name));
+            }
+        });
     }
 }

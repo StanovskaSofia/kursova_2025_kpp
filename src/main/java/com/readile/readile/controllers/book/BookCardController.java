@@ -33,6 +33,8 @@ public class BookCardController implements Initializable, FxController {
     public JFXSpinner progress;
     @FXML
     public ImageView star1, star2, star3, star4, star5;
+    @FXML
+    public Label listBadge1, listBadge2, listBadgeExtra;
     // VIEW VARIABLES --- >
 
     // SERVICES --- <
